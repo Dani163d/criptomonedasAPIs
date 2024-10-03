@@ -60,10 +60,7 @@ function submitFormulario(e) {
     }
 
     // consultar la API con los resultados
-
     consultarAPI();
-
-
 }
 
     function mostrarAlerta(msg) {
@@ -91,6 +88,8 @@ function submitFormulario(e) {
 
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
 
+        mostrarSpinner();
+
         fetch(url) 
             .then(respuesta => respuesta.json())
             .then(cotizacion => {
@@ -100,7 +99,7 @@ function submitFormulario(e) {
 
     function mostarCotizacionHTML(cotizacion) {
 
-        lipiarHTML()
+        limpiarHTML();
 
         const {PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE} = cotizacion;
 
@@ -128,8 +127,23 @@ function submitFormulario(e) {
         resultado.appendChild(ultimaActualizacion);
     }
 
-    function lipiarHTML() {
-        while(resultado.firstChild){
+    function mostrarSpinner() {
+        limpiarHTML();
+    
+        const spinner = document.createElement('div');
+        spinner.classList.add('spinner');
+    
+        spinner.innerHTML = `
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>    
+        `;
+    
+        resultado.appendChild(spinner);
+    }
+    
+    function limpiarHTML() {
+        while(resultado.firstChild) {
             resultado.removeChild(resultado.firstChild);
         }
-    }
+      }
